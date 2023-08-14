@@ -3,7 +3,7 @@ import random
 import shutil
 
 def split_and_move_images(source_folder, training_folder, testing_folder,num_to_select):
-    subjects = [f"s{i}" for i in range(1, 11)]  # s1 to s10
+    subjects = [f"s{i}" for i in range(1, 41)]  # s1 to s10
     
     #loop through S1 to S10
     for subject in subjects:
