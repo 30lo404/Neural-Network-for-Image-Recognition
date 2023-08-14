@@ -8,3 +8,8 @@ Neural-Network-for-Image-Recognition
         c)      掌握并实现KNN算法分类，通过KNN实现人脸识别并记录准确率。
         d)      掌握并实现CNN 算法，实现一个3层神经网络模型的搭建（input层、hidden层、output层），使用处理后的features作为输入，输出为一个1*40的矩阵（代表40个人的概率）。中间层包含100个神经元。使用sigmod非线性激活函数；并用该模型实现对400张人脸的识别，记录准备率。
         e)      总结分析：步骤b) 中，使用PCA, LDA等算法对照片实现预处理，再重复步骤d)，观察准备率有什么变化。
+
+    
+-------------------
+
+Run **python data_splitting** to split the face dataset
