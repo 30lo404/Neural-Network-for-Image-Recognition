@@ -1,33 +1,44 @@
 from PIL import Image
 import numpy as np
+import os
 
 def grayscale_to_matrix(image_path):
     img = Image.open(image_path)
-    gray_img = img.convert('L')
+    gray_img = img.convert('L') # L = R * 299/1000 + G * 587/1000+ B * 114/1000
     matrix = np.array(gray_img)
     return matrix
 
 def calculate_gradient(matrix):
     height, width = matrix.shape
-    gradient_matrix = np.zeros((height, width))
+    print(height, width)
+    gradient_matrix_column = np.zeros((height, width))
+    gradient_matrix_row = np.zeros((height, width))
     
-    gradient_filter = np.array([[1, 0, -1],
-                                 [2, 0, -2],
-                                 [1, 0, -1]])
+    
+    gradient_filter_column = np.array([[1, 0, -1],
+                                       [2, 0, -2],
+                                       [1, 0, -1]])
+    gradient_filter_row = np.array([[1, 2, 1],
+                                    [0, 0, 0],
+                                    [-1, -2, -1]])
     
     for i in range(1, height - 1):
         for j in range(1, width - 1):
-            gradient = np.sum(matrix[i-1:i+2, j-1:j+2] * gradient_filter)
-            gradient_matrix[i, j] = gradient
+            gradient_column = np.sum(matrix[i-1:i+2, j-1:j+2] * gradient_filter_column)
+            gradient_row = np.sum(matrix[i-1:i+2, j-1:j+2] * gradient_filter_row)
+            gradient_matrix_column[i, j] = gradient_column
+            gradient_matrix_row[i, j] = gradient_row
     
-    return gradient_matrix
+    return gradient_matrix_column, gradient_matrix_row
 
 def display_image(matrix):
     image = Image.fromarray(matrix)
     image.show()
 
-image_path = '2008_002221.jpg' 
+cwd = os.getcwd()
+image_path = '%s/items/aeroplane/2008_002221.jpg' % cwd 
 gray_matrix = grayscale_to_matrix(image_path)
-gradient_matrix = calculate_gradient(gray_matrix)
-print(gradient_matrix)
-display_image(gradient_matrix)
+gradient_matrix_column, gradient_matrix_row = calculate_gradient(gray_matrix)
+print(gradient_matrix_column, gradient_matrix_row)
+display_image(gradient_matrix_column)
+display_image(gradient_matrix_row)
